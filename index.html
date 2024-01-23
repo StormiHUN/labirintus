@@ -17,8 +17,9 @@
         background-color: white;
         border: 5px solid gray;
         width: 992px;
-        height: 752px;
+        height: 672px;
         padding: 10px;
+        font-size: 0;
     }
 
 
@@ -42,6 +43,78 @@
         }
 
         document.getElementById("content").innerHTML = html
+        generateLab()
+    }
+
+    function generateLab() {
+        let html = ""
+
+        let sorok = []
+        let oszlopok = []
+
+        let sor = Math.floor(Math.random()*9+1)*2
+        let oszlop = Math.floor(Math.random()*14+1)*2
+
+        
+        for(let i = 0; i < 24; i++){
+            sorok.push(sor)
+            oszlopok.push(oszlop)
+            sor = Math.floor(Math.random()*9+1)*2
+            oszlop = Math.floor(Math.random()*14+1)*2
+        }
+
+
+
+        for(let y = 1; y < 20; y++){
+            for(let x = 1; x < 30; x++){
+                t[y][x] = ""
+            }
+        }
+
+
+        for(let index = 0; index < sorok.length; index++){
+            if(Math.random() > 0.5){
+                for(let x = 29; x > 1; x--){
+                    if(t[sorok[index]][x-1] == ""){
+                        t[sorok[index]][x] = "wall.png"
+                    }
+                }
+            }else{
+                for(let x = 1; x < 30; x++){
+                    if(t[sorok[index]][x+1] == ""){
+                        t[sorok[index]][x] = "wall.png"
+                    }
+                }
+            }
+            //--------------
+            if(Math.random() > 0.5){
+                for(let x = 20; x > 1; x--){
+                    if(t[x-1][oszlopok[index]] == ""){
+                        t[x][oszlop[index]] = "wall.png"
+                    }
+                }
+            }else{
+                for(let x = 1; x < 20; x++){
+                    if(t[x+1][oszlopok[index]] == ""){
+                        t[x][oszlopok[index]] = "wall.png"
+                    }
+                }
+            }
+        }
+
+        for(let y = 0; y < 21; y++){
+            for(let x = 0; x < 31; x++){
+                if(t[y][x] != ""){
+                    html += "<img id='" + y + "," + x + "' src='icons/wall.png'>" 
+                }else{
+                    html += "<img id='" + y + "," + x + "' src='icons/null.png'>" 
+                }
+            }
+        }
+
+        document.getElementById("content").innerHTML = ""
+        document.getElementById("content").innerHTML = html
+
     }
 
 </script>
