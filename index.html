@@ -102,10 +102,32 @@
             }
         }
 
+
+        let rand = Math.floor(Math.random()*21+1)
+        while (t[rand][29] == "wall.png") {
+            rand = Math.floor(Math.random()*21+1)
+        }
+        t[rand][30] = "door.png"
+
+        let randh = Math.floor(Math.random()*21+1)
+        while (t[randh][1] == "wall.png") {
+            randh = Math.floor(Math.random()*21+1)
+        }
+        t[randh][1] = "man.png"
+
+        let ranx = Math.floor(Math.random()*31+1)
+        let rany = Math.floor(Math.random()*21+1)
+        while (t[rany][ranx] == "wall.png") {
+            let ranx = Math.floor(Math.random()*31+1)
+            let rany = Math.floor(Math.random()*21+1)
+        }
+        t[rany][ranx] = "key.png"
+
+
         for(let y = 0; y < 21; y++){
             for(let x = 0; x < 31; x++){
                 if(t[y][x] != ""){
-                    html += "<img id='" + y + "," + x + "' src='icons/wall.png'>" 
+                    html += "<img id='" + y + "," + x + "' src='icons/" + t[y][x] + "'>" 
                 }else{
                     html += "<img id='" + y + "," + x + "' src='icons/null.png'>" 
                 }
