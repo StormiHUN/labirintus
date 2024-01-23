@@ -25,13 +25,21 @@
 
 </style>
 <script>
-
+    let px = 1
+    let py = 0
+    let kx = 0;
+    let ky = 0;
+    let dx = 30;
+    let dy = 0
+    let flag = false
     let t = []
     function start(){
         reset()
     }
 
     function reset(){
+        px = 1
+        flag = false
         t = []
         let html = "";
         for(let y = 0; y < 21; y++){
@@ -56,7 +64,8 @@
         let oszlop = Math.floor(Math.random()*14+1)*2
 
         
-        for(let i = 0; i < 24; i++){
+        
+        for(let i = 0; i < 16; i++){
             sorok.push(sor)
             oszlopok.push(oszlop)
             sor = Math.floor(Math.random()*9+1)*2
@@ -108,12 +117,14 @@
             rand = Math.floor(Math.random()*21+1)
         }
         t[rand][30] = "door.png"
+        dy = rand
 
         let randh = Math.floor(Math.random()*21+1)
         while (t[randh][1] == "wall.png") {
             randh = Math.floor(Math.random()*21+1)
         }
         t[randh][1] = "man.png"
+        py = randh
 
         let ranx = Math.floor(Math.random()*31+1)
         let rany = Math.floor(Math.random()*21+1)
@@ -122,7 +133,8 @@
             let rany = Math.floor(Math.random()*21+1)
         }
         t[rany][ranx] = "key.png"
-
+        ky = rany
+        kx = ranx
 
         for(let y = 0; y < 21; y++){
             for(let x = 0; x < 31; x++){
@@ -138,6 +150,61 @@
         document.getElementById("content").innerHTML = html
 
     }
+    
+    document.addEventListener(`keydown`, e => {
+        let html = ""
+
+	    if (e.code == `KeyW` || e.code == `ArrowUp`) {
+	    	if(t[py-1][px] != "wall.png"){
+                t[py][px] = "null.png"
+                py--
+                t[py][px] = "man.png"
+            }
+	    } else if (e.code == `KeyS` || e.code == `ArrowDown`) {
+	    	if(t[py+1][px] != "wall.png"){
+                t[py][px] = "null.png"
+                py++
+                t[py][px] = "man.png"
+            }
+	    } else if (e.code == `KeyA` || e.code == `ArrowLeft`) {
+	    	if(t[py][px-1] != "wall.png"){
+                t[py][px] = "null.png"
+                px--
+                t[py][px] = "man.png"
+            }
+	    } else if (e.code == `KeyD` || e.code == `ArrowRight`) {
+	    	if(t[py][px+1] != "wall.png"){
+                t[py][px] = "null.png"
+                px++
+                t[py][px] = "man.png"
+            }
+	    }
+
+        
+        if(py == ky && px == kx){
+            t[ky][kx] = "null.png"
+            t[dy][dx] = "exit.png"
+            t[ky][kx] = "man.png"
+            ky = -1
+            kx = -1
+            flag = true
+        }
+        if(flag && px > 29){
+            reset()
+            console.log("asd")
+        }
+	    for(let y = 0; y < 21; y++){
+            for(let x = 0; x < 31; x++){
+                if(t[y][x] != ""){
+                    html += "<img id='" + y + "," + x + "' src='icons/" + t[y][x] + "'>" 
+                }else{
+                    html += "<img id='" + y + "," + x + "' src='icons/null.png'>" 
+                }
+            }
+        }
+        document.getElementById("content").innerHTML = html
+
+    });
 
 </script>
 <body onload="start()">
