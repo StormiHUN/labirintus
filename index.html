@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labirintus</title>
+</head>
+<style>
+
+    body{
+        background-color: darkslategray;
+    }
+
+    #content{
+        margin: auto;
+        background-color: white;
+        border: 5px solid gray;
+        width: 992px;
+        height: 752px;
+        padding: 10px;
+    }
+
+
+</style>
+<script>
+
+    let t = []
+    function start(){
+        reset()
+    }
+
+    function reset(){
+        t = []
+        let html = "";
+        for(let y = 0; y < 21; y++){
+            t.push([])
+            for(let x = 0; x < 31; x++){
+                t[y][x] = "wall.png"
+                html += "<img id='" + y + "," + x + "' src='icons/wall.png'>" 
+            }
+        }
+
+        document.getElementById("content").innerHTML = html
+    }
+
+</script>
+<body onload="start()">
+    
+    <div id="content">
+
+    </div>
+
+</body>
+</html>
